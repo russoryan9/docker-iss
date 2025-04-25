@@ -27,7 +27,8 @@ def get_iss_location():
     try:
         response = requests.get(url)
         r = response.json()
-
+        #Change 1
+        print('Values being Added to DB')
         # fetch values from response
         timestamp = r['timestamp']
         # convert timestamp to human readable date and time (out of epoch)
@@ -60,12 +61,11 @@ def write_to_mongo(dtime, long, lat):
             raise ValueError("MONGOPASS environment variable is not set")
             logging.error("MONGOPASS environment variable is not set")
             exit(1)
-            
         connection_string = f'mongodb+srv://docker:{dbpass}@cluster0.m3fek.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
         client = MongoClient(connection_string)
-
         # use your UVA computing ID for the database name
-        db = client['mst3k']
+        # Change 2
+        db = client['nqt2bq']
         collection = db['locations']
         collection.insert_one({'timestamp': dtime, 'longitude': long, 'latitude': lat})
         logger.info('Output written to MongoDB')
